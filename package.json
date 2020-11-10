@@ -1,0 +1,20 @@
+{
+  "name": "Omega",
+  "version": "1.0.0",
+  "description": "A simple hyperscript framework for developing fast web applications",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nathan-pham/Omega.git"
+  },
+  "keywords": ["framework", "hyperscript", "apps"],
+  "author": "Nathan Pham",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nathan-pham/Omega/issues"
+  },
+  "homepage": "https://github.com/nathan-pham/Omega#readme"
+}

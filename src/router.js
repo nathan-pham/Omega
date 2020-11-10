@@ -74,6 +74,10 @@ class Link extends Component {
 		this.handleClick = this.handleClick.bind(this)
 	}
 	handleClick(e) {
+		if(e.ctrlKey || e.metaKey || e.shiftKey) {
+			return
+		}
+
 		e.preventDefault()
 		
 		if(!router) {
@@ -81,6 +85,8 @@ class Link extends Component {
 		}
 
 		router.navigate(e.target.pathname)
+
+		return false
 	}
 	render() {
 		return (
