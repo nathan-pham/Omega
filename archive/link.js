@@ -60,10 +60,8 @@ class Router extends Component {
 }
 
 class Link extends Component {
-	constructor(props, ...children) {
+	constructor(props) {
 		super(props)
-
-		this.text = children.shift()
 		this.handleClick = this.handleClick.bind(this)
 	}
 	handleClick(e) {
@@ -78,9 +76,10 @@ class Link extends Component {
 	render() {
 		return (
 			a({ 
+				class: this.props.class,
 				href: this.props.href,
 				onClick: this.handleClick
-			}, this.text)	
+			}, this.props.children)	
 		)
 	}
 }

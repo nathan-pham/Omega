@@ -1,8 +1,15 @@
 {
-  "name": "Omega",
-  "version": "1.0.0",
-  "description": "A simple hyperscript framework for developing fast web applications",
+  "name": "omega-core",
+  "version": "1.0.2",
+  "description": "A simple hyperscript framework for developing web applications",
   "main": "index.js",
+	"files": [
+		"index.js",
+		"omega/core.js",
+		"omega/html.js",
+		"omega/router.js",
+		"omega/document.js"
+	],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -1,8 +1,19 @@
 # Omega
-A simple hyperscript framework for developing fast web applications
+A simple hyperscript framework for developing web applications
+
+## Known Limitations
+* No error management
+* Does not work with promises
+* Conditional rendering probably doesn't work
+* Diffing is crap
 
 ## Roadmap
-Planned features
+All planned features
+
+### Overall Upgrades
+* Upgrade diffing
+* Promises and conditional rendering
+* Add lifecycle? 
 
 ### Serverside rendering
 * send HTML

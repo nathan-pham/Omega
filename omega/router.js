@@ -12,11 +12,11 @@ import {
 let router
 
 class Router {
-	routes = {}
-	current = location.pathname
-	cache = 'omega-router'
-
 	constructor(root) {
+		this.routes = {}
+		this.current = location.pathname
+		this.cache = 'omega-router'
+
 		this.root = root
 		this.init()
 
@@ -36,7 +36,7 @@ class Router {
       }
     })
 	}
-	restoreHistory(path) {
+	async restoreHistory(path) {
 		this.saveHistory()
 
 		path = path || location.pathname + location.search
@@ -44,7 +44,7 @@ class Router {
 		// if(cached) { window.scrollTo(0, cached.scroll) }
 
 		force.clear()
-		render(this.routes[path](), this.root)	
+		await this.render(path)
 
 		this.current = path	
 	}
@@ -55,22 +55,29 @@ class Router {
 		let url = this.current || location.pathname + location.search
 		history.replaceState({ url }, document.title, location.href)
 	}
-	navigate(path) {
+	async navigate(path) {
 		if(this.current !== path) {
-			this.restoreHistory(path)
+			await this.restoreHistory(path)
 			this.pushUrlHistory(path)
 		}
 	}
 	start() {
-		render(this.routes[this.current](), this.root)
+		this.render(this.current)
+	}
+	async render(path) {
+		if(this.routes.hasOwnProperty(path)) {
+			render(await this.routes[path]({ pathname: path }), this.root)	
+		}
+		else {
+			render(await this.routes['404']({ pathname: path }), this.root)	
+		}
 	}
 }
 
 class Link extends Component {
-	constructor(props, ...children) {
-		super(props)
+	constructor(...props) {
+		super(...props)
 
-		this.text = children.shift()
 		this.handleClick = this.handleClick.bind(this)
 	}
 	handleClick(e) {
@@ -84,16 +91,22 @@ class Link extends Component {
 			throw new Error('You must declare an router before you can use link components.')
 		}
 
-		router.navigate(e.target.pathname)
+		router.navigate(this.props.href)
 
 		return false
 	}
 	render() {
+		
+		let attrs = Object.assign({}, this.props, {
+			onClick: this.handleClick
+		})
+
+		delete attrs.children
+
 		return (
-			a({ 
-				href: this.props.href,
-				onClick: this.handleClick
-			}, this.text)	
+			a(attrs,
+				this.props.children
+			)	
 		)
 	}
 }
