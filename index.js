@@ -1,9 +1,9 @@
-import { 
-	render,
+export {
 	Component
-} from './omega/core.js'
+} from './omega/component.js'
 
 export {
-	render,
-	Component
-}
+	render
+} from './omega/core.js'
+
+export * as html from './omega/html.js'

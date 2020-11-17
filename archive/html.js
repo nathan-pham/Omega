@@ -1,6 +1,4 @@
-import { 
-	omega 
-} from './core.js'
+import { omega } from './core.js'
 
 const o = (type) => {
 	return ((attrs, ...children) => {
