@@ -8,25 +8,36 @@ const {
 	div, button, h1, p, input
 } = html
 
-class Index extends Component {
+class Button extends Component {
 	constructor(...props) {
-		super(...props)
+		super(...props) 
+
 		this.state = {
 			counter: 0
 		}
-		this.test = this.test.bind(this)
+
+		this.click = this.click.bind(this)
 	}
-	test() {
+	click() {
 		this.setState(state => ({ counter: state.counter + 1 }))
+	}
+	render() {
+		return (
+			button({ onClick: this.click }, `Counter: ${this.state.counter}`)
+		)
+	}
+}
+
+class Index extends Component {
+	constructor(...props) {
+		super(...props)
 	}
 	render() {
 		return (
 			div({}, 
 				h1({}, 'The Virtual DOM'),
 				p({}, 'This is an example app.'),
-				input({ placeholder: 'example' }),
-				button({ onClick: this.test }, `Counter: ${this.state.counter}`),
-				this.props.children
+				new Button()
 			)
 		)
 	}

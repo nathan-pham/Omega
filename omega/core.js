@@ -11,11 +11,15 @@ const omega = (tag, attrs, ...children) => {
 }
 
 const renderNode = (node) => {
-	node = typeof node.render == 'function'
-		? node.render()
-		: node
+	let component = typeof node.render == 'function'
 
-	const { tag, attrs, children } = node
+	let vNode = node
+	if(component) {
+		vNode = node.render()
+		node.vNode = vNode
+	}
+
+	const { tag, attrs, children } = vNode
 
 	let el = document.createElement(tag)
 
@@ -27,6 +31,10 @@ const renderNode = (node) => {
 
 	for(const child of children) {
 		el.appendChild(renderHandler(child))
+	}
+
+	if(component) {
+		node.vBase = el
 	}
 
 	return el
@@ -45,41 +53,25 @@ const mount = (node, target) => {
 	return node
 }
 
-let vApp, root
-
 const render = (node, target) => {
-	vApp = renderHandler(node)
-	root = mount(vApp, target)
+	mount(renderHandler(node), target)
 }
-
-const update = (nApp) => {
-	root = diffTree(vApp, nApp)(root)
-	// const patch = diffTree(vApp, nApp)
-	// root = patch(root)
-	vApp = renderHandler(nApp)
-}
-
-
-// let App = render(logo())
-
-// let root = mount(App, document.getElementById('root'))
-
-// let count = 0
-// const vApp = render(counter(count))
-// let root = mount(vApp, document.getElementById('root'))
-
-// setInterval(() => {
-// 	count ++
-// 	let newApp = counter(count)
-// 	const patch = diffTree(App, newApp)
-
-// 	root = patch(root)
-// 	vApp = newApp
-// }, 1000)
 
 export {
 	omega,
 	render,
-	update,
 	renderHandler
 }
+
+
+// let vApp, root
+
+// const render = (node, target) => {
+// 	vApp = renderHandler(node)
+// 	root = mount(vApp, target)
+// }
+
+// const update = (nApp) => {
+// 	root = diffTree(vApp, nApp)(root)
+// 	vApp = renderHandler(nApp)
+// }

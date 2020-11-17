@@ -1,5 +1,5 @@
 import {
-	update
+	renderHandler
 } from './core.js'
 
 import {
@@ -14,6 +14,8 @@ class Component {
 			children: (props.flat().filter(v => v) || [])
 		})
 
+		this.vNode = null
+		this.vBase = null
 		this.state = {}
 	}
 	setState(state) {
@@ -28,31 +30,23 @@ class Component {
 }
 
 const renderComponent = (node) => {
-	update(node.render())
+	let nApp = node.render()
+	node.vBase = diffTree(node.vBase, nApp)(node.vBase)
+	node.vNode = nApp
 }
 
-// setInterval(() => {
-// 	count ++
-// 	let newApp = counter(count)
-// 	const patch = diffTree(App, newApp)
+// let vApp, root
 
-// 	root = patch(root)
-// 	vApp = newApp
-// }, 1000)
-
-
-// const renderComponent = (component) => {
-// 	let rendered = component.render(component.props, component.state)
-// 	component.base = diff(component.base, rendered)	
+// const render = (node, target) => {
+// 	vApp = renderHandler(node)
+// 	root = mount(vApp, target)
 // }
 
-// const renderComponent = (node) => {
-// 	let app = renderHandler(node)
-
-// 	let patch = diffTree(document.body, app)
-
-// 	node.base = patch(app)
+// const update = (nApp) => {
+// 	root = diffTree(vApp, nApp)(root)
+// 	vApp = renderHandler(nApp)
 // }
+
 
 export {
 	Component
