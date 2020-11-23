@@ -1,29 +1,25 @@
 import {
-	html,
 	render,
 	Component
 } from '/index.js'
 
-const {
+import {
 	div, button, h1, p, input
-} = html
+} from '/omega/html.js'
 
-class Button extends Component {
+class Modal extends Component {
 	constructor(...props) {
-		super(...props) 
+		super(...props)
 
 		this.state = {
-			counter: 0
+			show: this.props.show
 		}
-
-		this.click = this.click.bind(this)
-	}
-	click() {
-		this.setState(state => ({ counter: state.counter + 1 }))
 	}
 	render() {
 		return (
-			button({ onClick: this.click }, `Counter: ${this.state.counter}`)
+			div({ style: `display: ${this.state.show ? 'block': 'none'}` },
+				h1({}, 'Modal')
+			)
 		)
 	}
 }
@@ -31,13 +27,21 @@ class Button extends Component {
 class Index extends Component {
 	constructor(...props) {
 		super(...props)
+		this.state = {
+			show: false
+		}
+		this.modal = this.modal.bind(this)
+	}
+	modal() {
+		this.setState(state => ({ show: !state.show }))
 	}
 	render() {
 		return (
 			div({}, 
 				h1({}, 'The Virtual DOM'),
 				p({}, 'This is an example app.'),
-				new Button()
+				button({ onClick: this.modal }, 'modal'),
+				new Modal({ show: this.state.show })
 			)
 		)
 	}

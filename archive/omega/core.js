@@ -1,7 +1,3 @@
-import {
-	diffTree
-} from './difference.js'
-
 const omega = (tag, attrs, ...children) => {
 	return {
 		tag,
@@ -62,16 +58,3 @@ export {
 	render,
 	renderHandler
 }
-
-
-// let vApp, root
-
-// const render = (node, target) => {
-// 	vApp = renderHandler(node)
-// 	root = mount(vApp, target)
-// }
-
-// const update = (nApp) => {
-// 	root = diffTree(vApp, nApp)(root)
-// 	vApp = renderHandler(nApp)
-// }
